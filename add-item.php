@@ -89,10 +89,10 @@ if(isset($_POST['submit']))
         <label for="category" class="form-label">Category:</label>
         <select class="form-control" id="category" name="category" required>
             <option value="">Select category</option>
-            <option value="Bread">Bread</option>
-            <option value="Pastry">Pastry</option>
-            <option value="Cake">Cake</option>
-            <option value="Drink">Drink</option>
+            <option value="Pastries & Croissants">Pastries & Croissants</option>
+            <option value="Cookies, Squares & Tarts">Cookies, Squares & Tarts</option>
+            <option value="Muffins, Scones & Tea Biscuits">Muffins, Scones & Tea Biscuits</option>
+            <option value="Cakes & Loafs">Cakes & Loafs</option>
         </select>
     </div>
 

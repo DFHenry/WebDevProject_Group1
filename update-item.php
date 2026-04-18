@@ -124,10 +124,10 @@ if(isset($_POST['submit']))
         <label for="category" class="form-label">Category:</label>
         <select class="form-control" id="category" name="category" required>
             <option value="">Select category</option>
-            <option value="Bread" <?= $item['category'] == 'Bread' ? 'selected' : '' ?>>Bread</option>
-            <option value="Pastry" <?= $item['category'] == 'Pastry' ? 'selected' : '' ?>>Pastry</option>
-            <option value="Cake" <?= $item['category'] == 'Cake' ? 'selected' : '' ?>>Cake</option>
-            <option value="Drink" <?= $item['category'] == 'Drink' ? 'selected' : '' ?>>Drink</option>
+            <option value="Pastries & Croissants" <?= $item['category'] == 'Pastries & Croissants' ? 'selected' : '' ?>>Pastries & Croissants</option>
+            <option value="Cookies, Squares & Tarts" <?= $item['category'] == 'Cookies, Squares & Tarts' ? 'selected' : '' ?>>Cookies, Squares & Tarts</option>
+            <option value="Muffins, Scones & Tea Biscuits" <?= $item['category'] == 'Muffins, Scones & Tea Biscuits' ? 'selected' : '' ?>>Muffins, Scones & Tea Biscuits</option>
+            <option value="Cakes & Loafs" <?= $item['category'] == 'Cakes & Loafs' ? 'selected' : '' ?>>Cakes & Loafs</option>
         </select>
     </div>
 
