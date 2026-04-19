@@ -1,27 +1,29 @@
 <?php 
-    session_start();
-    if(!isset($_SESSION['id']))
-    {
-        header("Location: login.php"); // Redirect to login page if the user is not authenticated
-        exit();
-    }
-    
-    if(!isset($_GET['id']) || !is_numeric($_GET['id']))
-    {
-        header("Location: dashboard.php"); // Redirect to dashboard if the blog post ID is not provided or is not a valid number
-        exit();
-    }
-
     $pageTitle = "Menu Item Details";
 ?>
 <?php require_once('components/header.php'); ?>
 
 <?php
+if(!isset($_SESSION['id']))
+    {
+        header("Location: login.php"); // Redirect to login page if the user is not authenticated
+        exit();
+    }
 
+if(!isset($_GET['id']) || !is_numeric($_GET['id']))
+    {
+        header("Location: dashboard.php"); // Redirect to dashboard if the blog post ID is not provided or is not a valid number
+        exit();
+    }
+?>
+
+<?php
 // get menu items for the logged-in user from database
 $query = 'SELECT id, name, description, price, category, image_href, date_created FROM menu_items WHERE user_id = ? AND id = ? LIMIT 1';
 $stmt = $db->prepare($query); 
-$stmt->bind_param('ii', $_SESSION['id'], $_GET['id']);
+$userId = intval($_SESSION['id']);
+$itemId = intval($_GET['id']);
+$stmt->bind_param('ii', $userId, $itemId);
 if($stmt->execute() == false)
     {
         echo "Execute failed: " . $stmt->error;
@@ -60,7 +62,7 @@ $item = $items[0]; // Extract the single menu item from the array
 <hr />
 
 <?php if(!empty($item['image_href'])) : ?>
-    <img src="<?= htmlspecialchars($item['image_href']) ?>" class="img-fluid" alt="Menu Item Thumbnail">
+    <img src="<?= htmlspecialchars($item['image_href']) ?>" alt="Menu Item Thumbnail" style="max-width: 100%; height: auto; max-height: 500px; display: block;">
 
 <?php endif; ?>
 

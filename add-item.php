@@ -30,17 +30,21 @@ if(isset($_POST['submit']))
 
     if($isValid)
     {
+        $userId = intval($_SESSION['id']);
+        $name = trim($_POST['name']);
+        $description = trim($_POST['description']);
+        $price = floatval($_POST['price']);
+        $category = trim($_POST['category']);
         $imageurl = null;
         if(!empty($_POST['image'])) $imageurl = trim($_POST['image']);
         $query = "INSERT INTO menu_items (user_id, name, description, price, category, image_href) VALUES (?, ?, ?, ?, ?, ?)";
         $stmt = $db->prepare($query);
-        $price = floatval($_POST['price']);
         $stmt->bind_param('issdss',
-            $_SESSION['id'],
-            trim($_POST['name']),
-            trim($_POST['description']),
+            $userId,
+            $name,
+            $description,
             $price,
-            trim($_POST['category']),
+            $category,
             $imageurl
         );
         if($stmt->execute() == false)

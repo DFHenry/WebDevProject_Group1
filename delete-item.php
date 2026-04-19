@@ -1,27 +1,29 @@
 <?php 
-    session_start();
-    if(!isset($_SESSION['id']))
-    {
-        header("Location: login.php"); // Redirect to login page if the user is not authenticated
-        exit();
-    }
-    
-    if(!isset($_GET['id']) || !is_numeric($_GET['id']))
-    {
-        header("Location: dashboard.php"); // Redirect to dashboard if the menu item ID is not provided or is not a valid number
-        exit();
-    }
-
     $pageTitle = "Delete Menu Item";
 ?>
 <?php require_once('components/header.php'); ?>
 
 <?php
+if(!isset($_SESSION['id']))
+    {
+        header("Location: login.php"); // Redirect to login page if the user is not authenticated
+        exit();
+    }
 
+if(!isset($_GET['id']) || !is_numeric($_GET['id']))
+    {
+        header("Location: dashboard.php"); // Redirect to dashboard if the menu item ID is not provided or is not a valid number
+        exit();
+    }
+?>
+
+<?php
 // get menu items for the logged-in user from database
 $query = 'SELECT id, name FROM menu_items WHERE user_id = ? AND id = ? LIMIT 1';
 $stmt = $db->prepare($query); 
-$stmt->bind_param('ii', $_SESSION['id'], $_GET['id']);
+$userId = intval($_SESSION['id']);
+$itemId = intval($_GET['id']);
+$stmt->bind_param('ii', $userId, $itemId);
 if($stmt->execute() == false)
     {
         echo "Execute failed: " . $stmt->error;
@@ -43,8 +45,8 @@ if(isset($_POST['submit']))
     $query = "DELETE FROM menu_items WHERE id = ? AND user_id = ?";
     $stmt = $db->prepare($query);
     $stmt->bind_param('ii',
-        $_GET['id'],
-        $_SESSION['id']
+        $itemId,
+        $userId
     );
     if($stmt->execute() == false)
         {

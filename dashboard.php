@@ -15,7 +15,8 @@ if(!isset($_SESSION['id']))
 
 $query = "SELECT id, name, category, price FROM menu_items WHERE user_id = ? ORDER BY id DESC";
 $stmt = $db->prepare($query);
-$stmt->bind_param('i', $_SESSION['id']);
+$userId = intval($_SESSION['id']);
+$stmt->bind_param('i', $userId);
 if($stmt->execute() == false)
 {
     echo "Execute failed: " . $stmt->error;

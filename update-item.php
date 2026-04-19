@@ -1,27 +1,29 @@
 <?php 
-    session_start();
-    if(!isset($_SESSION['id']))
-    {
-        header("Location: login.php"); // Redirect to login page if the user is not authenticated
-        exit();
-    }
-    
-    if(!isset($_GET['id']) || !is_numeric($_GET['id']))
-    {
-        header("Location: dashboard.php"); // Redirect to dashboard if the blog post ID is not provided or is not a valid number
-        exit();
-    }
-
     $pageTitle = "Update Menu Item";
 ?>
 <?php require_once('components/header.php'); ?>
 
 <?php
+if(!isset($_SESSION['id']))
+    {
+        header("Location: login.php"); // Redirect to login page if the user is not authenticated
+        exit();
+    }
 
+if(!isset($_GET['id']) || !is_numeric($_GET['id']))
+    {
+        header("Location: dashboard.php"); // Redirect to dashboard if the blog post ID is not provided or is not a valid number
+        exit();
+    }
+?>
+
+<?php
 // get menu items for the logged-in user from database
 $query = 'SELECT id, name, description, price, category, image_href, date_created FROM menu_items WHERE user_id = ? AND id = ? LIMIT 1';
 $stmt = $db->prepare($query); 
-$stmt->bind_param('ii', $_SESSION['id'], $_GET['id']);
+$userId = intval($_SESSION['id']);
+$itemId = intval($_GET['id']);
+$stmt->bind_param('ii', $userId, $itemId);
 if($stmt->execute() == false)
     {
         echo "Execute failed: " . $stmt->error;
@@ -56,19 +58,22 @@ if(isset($_POST['submit']))
 
     if($isValid)
         {
+            $name = trim($_POST['name']);
+            $description = trim($_POST['description']);
+            $price = floatval($_POST['price']);
+            $category = trim($_POST['category']);
             $imageurl = null;
             if(!empty($_POST['image'])) $imageurl = trim($_POST['image']);
             $query = "UPDATE menu_items SET name = ?, image_href = ?, description = ?, price = ?, category = ? WHERE user_id = ? AND id = ?";
             $stmt = $db->prepare($query);
-            $price = floatval($_POST['price']);
             $stmt->bind_param('sssdsii',
-                trim($_POST['name']),
+                $name,
                 $imageurl,
-                trim($_POST['description']),
+                $description,
                 $price,
-                trim($_POST['category']),
-                $_SESSION['id'],
-                $_GET['id']
+                $category,
+                $userId,
+                $itemId
             );
             if($stmt->execute() == false)
                 {
@@ -133,7 +138,7 @@ if(isset($_POST['submit']))
 
     <div class="mb-3">
         <label for="image" class="form-label">Image URL:</label>
-        <input type="text" class="form-control" id="image" name="image" value="<?= htmlspecialchars($item['image_href']) ?>">
+        <input type="text" class="form-control" id="image" name="image" value="<?= htmlspecialchars($item['image_href'] ?? '') ?>">
     </div>
 
     <input type="submit" class="btn btn-primary" value="Update Menu Item" name="submit">
