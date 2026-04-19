@@ -133,6 +133,7 @@ if(isset($_POST['submit']))
             <option value="Cookies, Squares & Tarts" <?= $item['category'] == 'Cookies, Squares & Tarts' ? 'selected' : '' ?>>Cookies, Squares & Tarts</option>
             <option value="Muffins, Scones & Tea Biscuits" <?= $item['category'] == 'Muffins, Scones & Tea Biscuits' ? 'selected' : '' ?>>Muffins, Scones & Tea Biscuits</option>
             <option value="Cakes & Loafs" <?= $item['category'] == 'Cakes & Loafs' ? 'selected' : '' ?>>Cakes & Loafs</option>
+            <option value="Beverages" <?= $item['category'] == 'Beverages' ? 'selected' : '' ?>>Beverages</option>
         </select>
     </div>
 
