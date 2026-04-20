@@ -62,4 +62,4 @@
 </div>
 
 <!-- beginning of footer -->
-<php? include_once('components/footer.php') ?>
+<?php include_once('components/footer.php'); ?>
