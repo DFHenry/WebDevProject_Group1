@@ -18,7 +18,7 @@
 
 <?php
     //get all menu items
-    $menuQuery = 'SELECT * FROM menu_items';
+    $menuQuery = 'SELECT name, category, image_href, description, price FROM menu_items';
 
     //prepare sql statement
     $menuStmt = $db->query($menuQuery);
