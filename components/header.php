@@ -3,12 +3,11 @@
     ini_set('display_startup_errors', "1");
     error_reporting(E_ALL);
 
-
     session_start();
 
     if(!isset($pagetitle))
     {
-        $pageTitle = "Restaurant - Login";
+        $pageTitle = "Restaurant";
     }
     $db = new mysqli("localhost", "root", "root", "web-dev-project-group-assignment", 3306);
 
@@ -17,6 +16,7 @@
     <html>
         <head>
             <title><?= $pageTitle ?></title>
+            <link rel="stylesheet" href="../assets/css/styles.css">
         </head>
         <body>
             <div class="container mt-3">

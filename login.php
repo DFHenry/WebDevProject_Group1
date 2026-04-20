@@ -1,8 +1,11 @@
-<?php 
-    $pageTitle = "Restaurant | Login"; 
+<?php
+    //name page title, get initial error message
+    $pageTitle = "Restaurant | Login";
+    $errorMessage = "Please Enter Your Email & Password Below";
 ?>
 
 <?php 
+    //get header component
     require_once('components/header.php'); 
 ?>
 
@@ -17,13 +20,13 @@
         if(empty($_POST['email']) || empty($_POST['password']))
         {
             $isValid = false; 
-            $errorMessage= "Please Enter a Valid Email Address.";
+            $errorMessage= "invalid email or password.";
         }
         //if login email is impropery formatted, send error message
         elseif(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))
         {
             $isValid = false; 
-            $errorMessage= "Please Enter a Valid Email Address.";            
+            $errorMessage= "invalid email or password.";            
         }
 
         //if above checks pass, start login process
@@ -52,25 +55,33 @@
                 //get the results of the query
                 $result = $stmt->get_result();
 
+                //var_dump($result);
+
                 //place first entry in $result (there should only be one result anyways)
-                $user = $result->fetch_all(MYSQLI_ASSOC)[0];
+                $user = $result->fetch_all(MYSQLI_ASSOC);
 
                 //if user is empty, throw an error
-                if(empty($user))
+                if(empty($user[0]) || is_null($user[0]))
                 {
-                    $errorMessage = 'incorrect email or password';
+                    $errorMessage = 'invalid email or password.';
                 }
                 //otherwise, check if password matches the one on the DB for the user
                 else
                 {
-                    if(password_verify($_POST['password'], $user['password']))
+                    //verify password
+                    if(password_verify($_POST['password'], $user[0]['password']))
                     {
                         //assign email and id to $_SESSION
-                        $_SESSION['id'] = $user['id'];
-                        $_SESSION['email'] = $user['email'];
+                        $_SESSION['id'] = $user[0]['id'];
+                        $_SESSION['email'] = $user[0]['email'];
 
                         //redirect to dashboard
                         header('Location: dashboard.php');
+                    }
+                    else
+                    {
+                        //change error message
+                        $errorMessage = 'invalid email or password.';
                     }
                 }
             }
@@ -84,7 +95,7 @@
 
 <h3>Login Page</h3>
 
-<!-- <p><?=$errorMessage?></p> -->
+<p><?=$errorMessage?></p>
 
 <form action="" method="post">
     <div class="emailEntry">
@@ -98,4 +109,7 @@
     <button class="primaryButton" type="submit">Login</button>
 </form>
 
-<?php include_once('components/footer.php'); ?>
+<?php 
+    //get footer component
+    include_once('components/footer.php'); 
+?>

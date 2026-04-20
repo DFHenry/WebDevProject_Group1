@@ -1,0 +1,46 @@
+.itemGrid
+{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.menuItemName
+{
+    margin-top: 0;
+    grid-area:itemName;
+}
+
+.menuItemImage
+{
+    grid-area: itemImage
+}
+
+.menuItemCat
+{
+    grid-area: itemCategory;
+}
+
+.menuItemPrice
+{
+    grid-area: itemPrice;
+}
+
+.menuItemViewBtn
+{
+    margin-top: 10px;
+    grid-area: viewButton;
+}
+
+.menuItem
+{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas: 
+        "itemName itemName"
+        "itemCategory itemImage"
+        "itemPrice itemImage"
+        ". viewButton";
+    background-color: lavenderblush;
+    padding: 10px;
+    margin: 5px;
+}
