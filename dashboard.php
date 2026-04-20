@@ -19,7 +19,7 @@
 
 <?php
     //get all menu items
-    $menuQuery = 'SELECT name, id, category, image_href, description, price FROM menu_items';
+    $menuQuery = 'SELECT name, id, category, image_href, description, price FROM menu_items ORDER BY category, name';
 
     //prepare sql statement
     $menuStmt = $db->query($menuQuery);
@@ -59,8 +59,15 @@
 <a href="/add-item.php"><button>Add New Menu Item</button></a>
 
 <div class="itemGrid" id="menuItems">
+    <?php $currentCategory = ''; ?>
     <!-- for each item in the menu_items table, display data in it's own menuItem container -->
     <?php foreach($menuResult AS $item) : ?>
+        <?php if($currentCategory !== $item['category']) : ?>
+            <?php $currentCategory = $item['category']; ?>
+            <div class="menuCategoryHeader" style="grid-column: 1 / -1;">
+                <h3><?= htmlspecialchars($currentCategory) ?></h3>
+            </div>
+        <?php endif; ?>
         <div class="menuItem">
             <h3 class="menuItemName"><?php echo $item['name'] ?></h3>
             <p class="menuItemCat"><?php echo $item['category'] ?></p>
