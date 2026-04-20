@@ -1,6 +1,7 @@
 <?php
     //set page title
     $pageTitle = "Dashboard";
+    $itemId = 0;
 ?>
 
 <?php 
@@ -10,7 +11,7 @@
 
 <?php
     //redirect if session is null (ie. go to login if user attempts to go to dashboard without logging in first)
-    if($_SESSION['email'] == null || $_SESSION['email'] == "")
+    if($_SESSION['id'] == null)
     {
         header('Location: login.php');
     }
@@ -18,13 +19,31 @@
 
 <?php
     //get all menu items
-    $menuQuery = 'SELECT name, category, image_href, description, price FROM menu_items';
+    $menuQuery = 'SELECT name, id, category, image_href, description, price FROM menu_items';
 
     //prepare sql statement
     $menuStmt = $db->query($menuQuery);
 
     //get result and place into an array
     $menuResult = $menuStmt->fetch_all(MYSQLI_ASSOC);
+
+
+    // //get single item
+    // if(isset($_POST))
+    // {
+    //     $itemQuery = 'SELECT id FROM menu_items WHERE id = ? LIMIT 1';
+    //     $itemStmt = $db->prepare($itemQuery);
+    //     $itemId = ($_POST['id']);
+    //     $itemStmt->bind_param("i", $itemId);
+    //     $itemStmt->execute();
+    //     $itemResult = $itemStmt->get_result();
+    //     $itemData = $itemResult->fetch_all();
+
+    //     var_dump($_POST);
+    //     // header('Location: dashboard.php');
+    // }
+
+
 ?>
 
 
@@ -36,6 +55,9 @@
 
 <h3>Menu Items</h3>
 
+
+<a href="/add-item.php"><button>Add New Menu Item</button></a>
+
 <div class="itemGrid" id="menuItems">
     <!-- for each item in the menu_items table, display data in it's own menuItem container -->
     <?php foreach($menuResult AS $item) : ?>
@@ -44,7 +66,7 @@
             <p class="menuItemCat"><?php echo $item['category'] ?></p>
             <img class="menuItemImage" src="<?= $item['image_href'] ?>" alt="<?= $item['description'] ?>" width="100%">
             <p class="menuItemPrice">Current Price: $<?php echo $item['price'] ?></p>
-            <button class="menuItemViewBtn">View Item</button>
+            <a href="item-details.php?id=<?= $item['id'] ?>"><button>View Item</button></a>
         </div>
     <?php endforeach ?>
 </div>
