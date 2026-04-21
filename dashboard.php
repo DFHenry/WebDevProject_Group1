@@ -1,6 +1,6 @@
 <?php
     //set page title
-    $pageTitle = "Dashboard";
+    $pageTitle = "Dashboard | Three Dudes Bakery";
     $itemId = 0;
 ?>
 

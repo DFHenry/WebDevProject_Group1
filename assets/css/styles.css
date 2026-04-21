@@ -1,3 +1,22 @@
+/* BASICS */
+
+h3
+{
+    font-size: 20pt;
+}
+
+p, a, ol, li, label, input, button, select
+{
+    font-size: 16pt;
+}
+
+button
+{
+    background-color: #77a68a;
+    color: white
+}
+
+/* LAYOUT ITEMS */
 .itemGrid
 {
     display: grid;
@@ -40,7 +59,80 @@
         "itemCategory itemImage"
         "itemPrice itemImage"
         ". viewButton";
-    background-color: lavenderblush;
+    background-color: #fff0f5;
     padding: 10px;
     margin: 5px;
+}
+
+.addEditMenuItemBox
+{
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
+
+.addEditMenuItemNameContainer
+{
+    grid-area: itemNameCon;
+    padding-bottom: 5px;
+}
+
+.addEditMenuItemDescLabelContainer
+{
+    grid-area: itemDescCon;
+    padding-bottom: 5px;
+}
+
+.addEditMenuItemDescFieldContainer
+{
+    grid-area: itemFieldCon;
+    padding-bottom: 5px;
+}
+
+.addEditMenuItemCatContainer
+{
+    grid-area: itemCatCon;
+    padding-bottom: 5px;
+}
+
+.form-control
+{
+    width: 98%;
+    
+}
+
+.addEditMenuItemPriceContainer
+{
+    grid-area: itemPriceCon;
+    padding-bottom: 5px;
+}
+
+.addEditMenuItemImgContainer
+{
+    grid-area: itemImgCon;
+    padding-bottom: 5px;
+}
+
+.addEditMenuItemBtnContainer
+{
+    grid-area: itemBtnCon;
+    align-self: self-end;
+    padding-bottom: 5px;
+}
+
+.addEditMenuItemForm
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 
+        "itemNameCon itemNameCon"
+        "itemDescCon itemDescCon"
+        "itemFieldCon itemFieldCon"
+        "itemPriceCon itemPriceCon"
+        "itemCatCon itemCatCon"
+        "itemImgCon itemImgCon"
+        ". itemBtnCon";
+    background-color: lavenderblush;
+    padding: 10px;
+
 }

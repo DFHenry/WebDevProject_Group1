@@ -1,5 +1,5 @@
 <?php 
-    $pageTitle = "Add Menu Item";
+    $pageTitle = "Add Menu Item | Three Dudes Bakery";
 ?>
 <?php require_once('components/header.php'); ?>
 
@@ -73,40 +73,46 @@ if(isset($_POST['submit']))
 
     <p>Use the form below to add a new menu item. Image is optional.</p>
 </div>
-<form action="add-item.php" method="post">
-    <div class="mb-3">
-        <label for="name" class="form-label">Menu Item Name:</label>
-        <input type="text" class="form-control" id="name" name="name" required>
-    </div>  
 
-    <div class="mb-3">
-        <label for="description" class="form-label">Menu Item Description:</label>
-        <textarea class="form-control" id="description" name="description" rows="5" required></textarea>
-    </div>
+<div class="addEditMenuItemBox">
+    <form class="addEditMenuItemForm" action="add-item.php" method="post">
+        <div class="addEditMenuItemNameContainer">
+            <label for="name" class="form-label">Menu Item Name:</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+        </div>  
 
-    <div class="mb-3">
-        <label for="price" class="form-label">Price:</label>
-        <input type="number" class="form-control" id="price" name="price" step="0.01" min="0" required>
-    </div>
+        <div class="addEditMenuItemDescLabelContainer">
+            <label for="description" class="form-label">Menu Item Description:</label> 
+        </div>
 
-    <div class="mb-3">
-        <label for="category" class="form-label">Category:</label>
-        <select class="form-control" id="category" name="category" required>
-            <option value="">Select category</option>
-            <option value="Pastries & Croissants">Pastries & Croissants</option>
-            <option value="Cookies, Squares & Tarts">Cookies, Squares & Tarts</option>
-            <option value="Muffins, Scones & Tea Biscuits">Muffins, Scones & Tea Biscuits</option>
-            <option value="Cakes & Loafs">Cakes & Loafs</option>
-            <option value="Beverages">Beverages</option>
-        </select>
-    </div>
+        <div class="addEditMenuItemDescFieldContainer">
+            <textarea class="form-control" id="description" name="description" rows="5" required></textarea>
+        </div>
 
-    <div class="mb-3">
-        <label for="image" class="form-label">Image URL:</label>
-        <input type="text" class="form-control" id="image" name="image">
-    </div>
+        <div class="addEditMenuItemPriceContainer">
+            <label for="price" class="form-label">Price:</label>
+            <input type="number" class="form-control" id="price" name="price" step="0.01" min="0" required>
+        </div>
 
-    <input type="submit" class="btn btn-primary" value="Add Menu Item" name="submit">
-</form>
+        <div class="addEditMenuItemCatContainer">
+            <label for="category" class="form-label">Category:</label>
+            <select class="form-control" id="category" name="category" required>
+                <option value="">Select category</option>
+                <option value="Pastries & Croissants">Pastries & Croissants</option>
+                <option value="Cookies, Squares & Tarts">Cookies, Squares & Tarts</option>
+                <option value="Muffins, Scones & Tea Biscuits">Muffins, Scones & Tea Biscuits</option>
+                <option value="Cakes & Loafs">Cakes & Loafs</option>
+                <option value="Beverages">Beverages</option>
+            </select>
+        </div>
 
+        <div class="addEditMenuItemImgContainer">
+            <label for="image" class="form-label">Image URL:</label>
+            <input type="text" class="form-control" id="image" name="image">
+        </div>
+
+        <div class="addEditMenuItemBtnContainer"></div>
+        <input type="submit" class="" value="Add Menu Item" name="submit">
+    </form>
+</div>
 <?php require_once('components/footer.php'); ?>

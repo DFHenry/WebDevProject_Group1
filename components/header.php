@@ -7,12 +7,12 @@
 
     if(!isset($pagetitle))
     {
-        $pageTitle = "Restaurant";
+        $pageTitle = "Three Dudes Bakery";
     }
     $db = new mysqli("localhost", "root", "root", "web-dev-project-group-assignment", 3306);
 
 ?>
-<DOCTYPE html>
+<!DOCTYPE html>
     <html>
         <head>
             <title><?= $pageTitle ?></title>

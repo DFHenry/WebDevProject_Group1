@@ -1,5 +1,5 @@
 <?php 
-    $pageTitle = "Menu Item Details";
+    $pageTitle = "Menu Item Details | Three Dudes Bakery";
 ?>
 <?php require_once('components/header.php'); ?>
 

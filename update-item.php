@@ -1,5 +1,5 @@
 <?php 
-    $pageTitle = "Update Menu Item";
+    $pageTitle = "Update Menu Item | Three Dudes Bakery";
 ?>
 <?php require_once('components/header.php'); ?>
 
@@ -109,40 +109,45 @@ if(isset($_POST['submit']))
 
     <p>Use the form below to update your menu item. Image is optional.</p>
 </div>
-<form action="update-item.php?id=<?= $item['id'] ?>" method="post">
-    <div class="mb-3">
-        <label for="name" class="form-label">Menu Item Name:</label>
-        <input type="text" class="form-control" id="name" name="name" required value="<?= htmlspecialchars($item['name']) ?>">
-    </div>  
 
-    <div class="mb-3">
-        <label for="description" class="form-label">Menu Item Description:</label>
-        <textarea class="form-control" id="description" name="description" rows="5" required><?= htmlspecialchars($item['description']) ?></textarea>
-    </div>
+<div class="addEditMenuItemBox">
+    <form class="addEditMenuItemForm" action="update-item.php?id=<?= $item['id'] ?>" method="post">
+        <div class="addEditMenuItemNameContainer">
+            <label for="name" class="form-label">Menu Item Name:</label>
+            <input type="text" class="form-control" id="name" name="name" required value="<?= htmlspecialchars($item['name']) ?>">
+        </div>  
 
-    <div class="mb-3">
-        <label for="price" class="form-label">Price:</label>
-        <input type="number" class="form-control" id="price" name="price" step="0.01" min="0" required value="<?= $item['price'] ?>">
-    </div>
+        <div class="addEditMenuItemDescLabelContainer">
+            <label for="description" class="form-label">Menu Item Description:</label>  
+        </div>
 
-    <div class="mb-3">
-        <label for="category" class="form-label">Category:</label>
-        <select class="form-control" id="category" name="category" required>
-            <option value="">Select category</option>
-            <option value="Pastries & Croissants" <?= $item['category'] == 'Pastries & Croissants' ? 'selected' : '' ?>>Pastries & Croissants</option>
-            <option value="Cookies, Squares & Tarts" <?= $item['category'] == 'Cookies, Squares & Tarts' ? 'selected' : '' ?>>Cookies, Squares & Tarts</option>
-            <option value="Muffins, Scones & Tea Biscuits" <?= $item['category'] == 'Muffins, Scones & Tea Biscuits' ? 'selected' : '' ?>>Muffins, Scones & Tea Biscuits</option>
-            <option value="Cakes & Loafs" <?= $item['category'] == 'Cakes & Loafs' ? 'selected' : '' ?>>Cakes & Loafs</option>
-            <option value="Beverages" <?= $item['category'] == 'Beverages' ? 'selected' : '' ?>>Beverages</option>
-        </select>
-    </div>
+        <div class="addEditMenuItemDescFieldContainer">
+            <textarea class="form-control" id="description" name="description" rows="5" required><?= htmlspecialchars($item['description']) ?></textarea>
+        </div>
 
-    <div class="mb-3">
-        <label for="image" class="form-label">Image URL:</label>
-        <input type="text" class="form-control" id="image" name="image" value="<?= htmlspecialchars($item['image_href'] ?? '') ?>">
-    </div>
+        <div class="addEditMenuItemPriceContainer">
+            <label for="price" class="form-label">Price:</label>
+            <input type="number" class="form-control" id="price" name="price" step="0.01" min="0" required value="<?= $item['price'] ?>">
+        </div>
 
-    <input type="submit" class="btn btn-primary" value="Update Menu Item" name="submit">
-</form>
+        <div class="addEditMenuItemCatContainer">
+            <label for="category" class="form-label">Category:</label>
+            <select class="form-control" id="category" name="category" required>
+                <option value="">Select category</option>
+                <option value="Pastries & Croissants" <?= $item['category'] == 'Pastries & Croissants' ? 'selected' : '' ?>>Pastries & Croissants</option>
+                <option value="Cookies, Squares & Tarts" <?= $item['category'] == 'Cookies, Squares & Tarts' ? 'selected' : '' ?>>Cookies, Squares & Tarts</option>
+                <option value="Muffins, Scones & Tea Biscuits" <?= $item['category'] == 'Muffins, Scones & Tea Biscuits' ? 'selected' : '' ?>>Muffins, Scones & Tea Biscuits</option>
+                <option value="Cakes & Loafs" <?= $item['category'] == 'Cakes & Loafs' ? 'selected' : '' ?>>Cakes & Loafs</option>
+                <option value="Beverages" <?= $item['category'] == 'Beverages' ? 'selected' : '' ?>>Beverages</option>
+            </select>
+        </div>
 
+        <div class="addEditMenuItemImgContainer">
+            <label for="image" class="form-label">Image URL:</label>
+            <input type="text" class="form-control" id="image" name="image" value="<?= htmlspecialchars($item['image_href'] ?? '') ?>">
+        </div>
+
+        <input type="submit" class="btn btn-primary" value="Update Menu Item" name="submit">
+    </form>
+</div>
 <?php require_once('components/footer.php'); ?>

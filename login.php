@@ -1,6 +1,6 @@
 <?php
     //name page title, get initial error message
-    $pageTitle = "Restaurant | Login";
+    $pageTitle = "Login | Three Dudes Bakery";
     $errorMessage = "Please Enter Your Email & Password Below";
 ?>
 
