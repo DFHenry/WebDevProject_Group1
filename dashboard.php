@@ -27,23 +27,6 @@
     //get result and place into an array
     $menuResult = $menuStmt->fetch_all(MYSQLI_ASSOC);
 
-
-    // //get single item
-    // if(isset($_POST))
-    // {
-    //     $itemQuery = 'SELECT id FROM menu_items WHERE id = ? LIMIT 1';
-    //     $itemStmt = $db->prepare($itemQuery);
-    //     $itemId = ($_POST['id']);
-    //     $itemStmt->bind_param("i", $itemId);
-    //     $itemStmt->execute();
-    //     $itemResult = $itemStmt->get_result();
-    //     $itemData = $itemResult->fetch_all();
-
-    //     var_dump($_POST);
-    //     // header('Location: dashboard.php');
-    // }
-
-
 ?>
 
 

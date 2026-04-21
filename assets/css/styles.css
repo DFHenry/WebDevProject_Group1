@@ -10,13 +10,82 @@ p, a, ol, li, label, input, button, select
     font-size: 16pt;
 }
 
-button
+/* LAYOUT ITEMS */
+
+/* FRONT END */
+
+#mainTitle
 {
-    background-color: #77a68a;
-    color: white
+    display: flex;
+    justify-content: center;
 }
 
-/* LAYOUT ITEMS */
+#hero
+{
+    position: relative;
+
+}
+
+#hero img
+{
+    width: 100%;
+}
+
+#hero-text
+{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    color: #fff;
+}
+
+.frontItemGrid
+{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.frontItemName
+{
+    grid-area:frontItemName;
+    justify-self: center;
+}
+
+.frontItemCat
+{
+    grid-area: frontItemCat;
+}
+
+.frontItemImage
+{
+    grid-area: frontItemImage;
+}
+
+.frontItemPrice
+{
+    grid-area: frontItemPrice;
+}
+
+.frontItemViewBtn
+{
+    grid-area: frontItemBtn;
+}
+
+.frontMenuItem
+{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas: 
+        "frontItemName frontItemName"
+        "frontItemCat frontItemImage"
+        "frontItemPrice frontItemImage"
+        ". frontItemBtn";
+    background-color: #fff0f5;
+    padding: 10px;
+    margin: 5px;
+}
+
+/* BACK END */
 .itemGrid
 {
     display: grid;

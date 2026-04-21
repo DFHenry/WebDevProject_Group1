@@ -91,7 +91,7 @@
     //end of validation
 ?>
 
-<h1 class="mb-2">Restaurant Name</h1>
+<h1 class="mb-2">Three Dudes Bakery</h1>
 
 <h3 class="mb-3">Login Page</h3>
 
@@ -108,6 +108,8 @@
     </div>
     <button class="btn btn-primary" type="submit">Login</button>
 </form>
+
+<a href="index.php"><button class="btn btn-primary">Return To Homepage</button></a>
 
 <?php 
     //get footer component
