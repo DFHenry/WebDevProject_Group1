@@ -61,7 +61,7 @@ if(isset($_POST['submit']))
 }
 ?>
 
-<h1>Add a New Menu Item</h1>
+<h1 class="mb-3">Add a New Menu Item</h1>
 
 <a href="dashboard.php" class="btn btn-secondary mb-3">Back to Dashboard</a> <!-- Button to navigate back to the dashboard -->  
 <div class="mb-3">
@@ -75,7 +75,7 @@ if(isset($_POST['submit']))
 </div>
 
 <div class="addEditMenuItemBox">
-    <form class="addEditMenuItemForm" action="add-item.php" method="post">
+    <form class="addEditMenuItemForm card border-0 shadow-sm rounded-3" action="add-item.php" method="post">
         <div class="addEditMenuItemNameContainer">
             <label for="name" class="form-label">Menu Item Name:</label>
             <input type="text" class="form-control" id="name" name="name" required>
@@ -96,7 +96,7 @@ if(isset($_POST['submit']))
 
         <div class="addEditMenuItemCatContainer">
             <label for="category" class="form-label">Category:</label>
-            <select class="form-control" id="category" name="category" required>
+            <select class="form-select" id="category" name="category" required>
                 <option value="">Select category</option>
                 <option value="Pastries & Croissants">Pastries & Croissants</option>
                 <option value="Cookies, Squares & Tarts">Cookies, Squares & Tarts</option>
@@ -111,8 +111,9 @@ if(isset($_POST['submit']))
             <input type="text" class="form-control" id="image" name="image">
         </div>
 
-        <div class="addEditMenuItemBtnContainer"></div>
-        <input type="submit" class="" value="Add Menu Item" name="submit">
+        <div class="addEditMenuItemBtnContainer">
+            <input type="submit" class="btn btn-primary" value="Add Menu Item" name="submit">
+        </div>
     </form>
 </div>
 <?php require_once('components/footer.php'); ?>

@@ -91,22 +91,22 @@
     //end of validation
 ?>
 
-<h1>Restaurant Name</h1>
+<h1 class="mb-2">Restaurant Name</h1>
 
-<h3>Login Page</h3>
+<h3 class="mb-3">Login Page</h3>
 
-<p><?=$errorMessage?></p>
+<p class="alert alert-info py-2"><?=$errorMessage?></p>
 
-<form action="" method="post">
-    <div class="emailEntry">
-        <label for="email">Email</label>
-        <input type="email" name="email" id="email">
+<form action="" method="post" class="card border-0 shadow-sm rounded-3 p-3" style="max-width: 560px;">
+    <div class="emailEntry mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" name="email" id="email" class="form-control">
     </div>
-    <div class="passwordEntry">
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password">
+    <div class="passwordEntry mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" name="password" id="password" class="form-control">
     </div>
-    <button class="primaryButton" type="submit">Login</button>
+    <button class="btn btn-primary" type="submit">Login</button>
 </form>
 
 <?php 

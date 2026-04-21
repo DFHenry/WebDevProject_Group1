@@ -89,7 +89,7 @@ if(isset($_POST['submit']))
 }
 ?>
 
-<h1>Update Menu Item</h1>
+<h1 class="mb-3">Update Menu Item</h1>
 
 
 <nav aria-label="breadcrumb">
@@ -111,7 +111,7 @@ if(isset($_POST['submit']))
 </div>
 
 <div class="addEditMenuItemBox">
-    <form class="addEditMenuItemForm" action="update-item.php?id=<?= $item['id'] ?>" method="post">
+    <form class="addEditMenuItemForm card border-0 shadow-sm rounded-3" action="update-item.php?id=<?= $item['id'] ?>" method="post">
         <div class="addEditMenuItemNameContainer">
             <label for="name" class="form-label">Menu Item Name:</label>
             <input type="text" class="form-control" id="name" name="name" required value="<?= htmlspecialchars($item['name']) ?>">
@@ -132,7 +132,7 @@ if(isset($_POST['submit']))
 
         <div class="addEditMenuItemCatContainer">
             <label for="category" class="form-label">Category:</label>
-            <select class="form-control" id="category" name="category" required>
+            <select class="form-select" id="category" name="category" required>
                 <option value="">Select category</option>
                 <option value="Pastries & Croissants" <?= $item['category'] == 'Pastries & Croissants' ? 'selected' : '' ?>>Pastries & Croissants</option>
                 <option value="Cookies, Squares & Tarts" <?= $item['category'] == 'Cookies, Squares & Tarts' ? 'selected' : '' ?>>Cookies, Squares & Tarts</option>
@@ -147,7 +147,9 @@ if(isset($_POST['submit']))
             <input type="text" class="form-control" id="image" name="image" value="<?= htmlspecialchars($item['image_href'] ?? '') ?>">
         </div>
 
-        <input type="submit" class="btn btn-primary" value="Update Menu Item" name="submit">
+        <div class="addEditMenuItemBtnContainer">
+            <input type="submit" class="btn btn-primary" value="Update Menu Item" name="submit">
+        </div>
     </form>
 </div>
 <?php require_once('components/footer.php'); ?>

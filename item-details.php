@@ -46,14 +46,14 @@ $item = $items[0]; // Extract the single menu item from the array
   </ol>
 </nav>
 
-<h1><?= htmlspecialchars($item['name']) ?></h1>
-<ul>
+<h1 class="mb-3"><?= htmlspecialchars($item['name']) ?></h1>
+<ul class="list-group list-group-flush mb-3">
     <li>Date Added: <?= $item['date_created'] ?></li>
     <li>Category: <?= htmlspecialchars($item['category']) ?></li>
     <li>Price: $<?= number_format($item['price'], 2) ?></li>
 </ul>
 
-<div>
+<div class="d-flex gap-2 mb-3 flex-wrap">
     <a href="update-item.php?id=<?= $item['id'] ?>" class="btn btn-secondary">Edit Menu Item</a>
     <a href ="delete-item.php?id=<?= $item['id'] ?>" class="btn btn-danger">Delete Menu Item</a>
 </div>
@@ -62,10 +62,10 @@ $item = $items[0]; // Extract the single menu item from the array
 <hr />
 
 <?php if(!empty($item['image_href'])) : ?>
-    <img src="<?= htmlspecialchars($item['image_href']) ?>" alt="Menu Item Thumbnail" style="max-width: 100%; height: auto; max-height: 500px; display: block;">
+    <img src="<?= htmlspecialchars($item['image_href']) ?>" alt="Menu Item Thumbnail" class="img-fluid rounded shadow-sm" style="max-width: 100%; height: auto; max-height: 500px; display: block;">
 
 <?php endif; ?>
 
-<p><?= nl2br(htmlspecialchars($item['description'])) ?></p>
+<p class="mt-3"><?= nl2br(htmlspecialchars($item['description'])) ?></p>
 
 <?php require_once('components/footer.php'); ?>

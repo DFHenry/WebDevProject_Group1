@@ -16,6 +16,7 @@
     <html>
         <head>
             <title><?= $pageTitle ?></title>
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
             <link rel="stylesheet" href="../assets/css/styles.css">
         </head>
         <body>
