@@ -27,6 +27,15 @@
     //get result and place into an array
     $menuResult = $menuStmt->fetch_all(MYSQLI_ASSOC);
 
+    //get all catering orders
+    $cateringQuery = 'SELECT order_id, event_date, guest_count, event_type, is_delivery, delivery_address, special_instructions, order_status FROM catering_orders ORDER BY event_date';
+
+    //prepare sql statement
+    $cateringStmt = $db->query($cateringQuery);
+
+    //get result and place into an array
+    $cateringResult = $cateringStmt->fetch_all(MYSQLI_ASSOC);
+
 ?>
 
 
@@ -61,10 +70,34 @@
     <?php endforeach ?>
 </div>
 
-<h3>Catering Options</h3>
+<h3>Catering Orders</h3>
 
-<div class="itemGrid" id="cateringItems">
+<a href="/add-catering.php"><button class="btn btn-success">Add New Catering Order</button></a>
+
+
+<div class="itemGrid mt-3" id="cateringItems">
+  <?php $eventType = ''; ?>
     <!-- TODO: create an itemGrid for catering items -->
+     <?php foreach($cateringResult AS $order) : ?>
+      <?php if ($eventType !== $order['event_type']) : ?>
+        <?php $eventType = $order['event_type']; ?>
+        <div class="menuCategoryHeader mt-3 mb-2" style="grid-column: 1 / -1;">
+          <h3 class="mb-1"><?= htmlspecialchars($eventType) ?></h3>
+        </div>
+        <?php endif; ?>
+        <div class="card border-0 shadow-sm rounded-3" style="grid: 1fr 1fr / 1fr 1fr">
+          <p class="menuItemCat">Event ID: <?php echo $order['order_id'] ?></p>
+          <p class="menuItemCat">Guests: <?php echo $order['guest_count'] ?></p>
+          <p class="menuItemPrice mb-2">Event Date: <?php echo $order['event_date'] ?></p>
+          <p class="menuItemPrice mb-2"><?= $order['delivery_address']?></p>
+        <?php if($order['is_delivery']) : ?>
+          <p class="menuItemPrice mb-2">Requires Delivery</p>
+        <?php else : ?>
+          <p class="menuItemPrice mb-2">For Pickup</p>
+        <?php endif; ?>
+          <p class="menuItemCat text-muted"><?php echo $order['order_status'] ?></p>
+      </div>
+    <?php endforeach ?>
 </div>
 
 <div id="logout">
