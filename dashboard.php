@@ -96,6 +96,7 @@
           <p class="menuItemPrice mb-2">For Pickup</p>
         <?php endif; ?>
           <p class="menuItemCat text-muted"><?php echo $order['order_status'] ?></p>
+          <a href="catering-details.php?id=<?= $order['order_id'] ?>"><button class="btn btn-outline-primary">View Order</button></a>
       </div>
     <?php endforeach ?>
 </div>
