@@ -15,37 +15,44 @@ if(!isset($_SESSION['id']))
 if(isset($_POST['submit']))
 {
     $isValid = true;
-    if(empty($_POST['name']) || empty($_POST['description']) || empty($_POST['price']) || empty($_POST['category']))
+    if(empty($_POST['event_date']) || empty($_POST['guest_count']) || empty($_POST['event_type']) || empty($_POST['order_status']))
     {
         $isValid = false;
     }
-    elseif(!is_numeric($_POST['price']) || floatval($_POST['price']) < 0)
+    elseif(($_POST['is_delivery']))
     {
-        $isValid = false;
-    }
-    elseif(!empty($_POST['image']) && filter_var($_POST['image'], FILTER_VALIDATE_URL) == false)
-    {
-        $isValid = false;
+        if(empty($_POST['delivery_address']))
+        {
+            $isValid = false;
+        }
     }
 
     if($isValid)
     {
         $userId = intval($_SESSION['id']);
-        $name = trim($_POST['name']);
-        $description = trim($_POST['description']);
-        $price = floatval($_POST['price']);
-        $category = trim($_POST['category']);
-        $imageurl = null;
+        $eventDate = trim($_POST['event_date']);
+        $guestCount = intval($_POST['guest_count']);
+        $eventType = trim($_POST['event_type']);
+        $isDelivery = isset($_POST['is_delivery']) ? 1 : 0;
+        $deliveryAddress = null;
+
+        if($isDelivery) $deliveryAddress = trim($_POST['delivery_address']);
+        $specialInstructions = trim($_POST['special_instructions']);
+        $orderStatus = trim($_POST['order_status']);
+        
         if(!empty($_POST['image'])) $imageurl = trim($_POST['image']);
-        $query = "INSERT INTO menu_items (user_id, name, description, price, category, image_href) VALUES (?, ?, ?, ?, ?, ?)";
+
+        $query = "INSERT INTO catering_orders (user_id, event_date, guest_count, event_type, is_delivery, delivery_address, special_instructions, order_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $db->prepare($query);
-        $stmt->bind_param('issdss',
+        $stmt->bind_param('isisisss',
             $userId,
-            $name,
-            $description,
-            $price,
-            $category,
-            $imageurl
+            $eventDate,
+            $guestCount,
+            $eventType,
+            $isDelivery,
+            $deliveryAddress,
+            $specialInstructions,
+            $orderStatus
         );
         if($stmt->execute() == false)
         {
@@ -61,7 +68,7 @@ if(isset($_POST['submit']))
 }
 ?>
 
-<h1 class="mb-3">Add a New Menu Item</h1>
+<h1 class="mb-3">Add a New Catering Order</h1>
 
 <a href="dashboard.php" class="btn btn-secondary mb-3">Back to Dashboard</a> <!-- Button to navigate back to the dashboard -->  
 <div class="mb-3">
@@ -75,45 +82,38 @@ if(isset($_POST['submit']))
 </div>
 
 <div class="addEditMenuItemBox">
-    <form class="addEditMenuItemForm card border-0 shadow-sm rounded-3" action="add-item.php" method="post">
-        <div class="addEditMenuItemNameContainer">
-            <label for="name" class="form-label">Menu Item Name:</label>
-            <input type="text" class="form-control" id="name" name="name" required>
-        </div>  
+  <form class="card border-0 shadow-sm rounded-3" action="add-catering.php" method="post">
+    <div>
+      <label for="event_date" class="form-label">Event Date:</label>
+      <input type="datetime-local" class="form-control" id="event_date" name="event_date" required>
+    </div>  
+    <div>
+      <label for="event_type" class="form-label">Event Type:</label> 
+      <input type="text" class="form-control" id="event_type" name="event_type" required>
+    </div>
+    <div>
+      <label for="guest_count" class="form-label">Guest Count:</label>
+      <input type="number" class="form-control" id="guest_count" name="guest_count" step="1" min="1" required>
+    </div>
 
-        <div class="addEditMenuItemDescLabelContainer">
-            <label for="description" class="form-label">Menu Item Description:</label> 
-        </div>
-
-        <div class="addEditMenuItemDescFieldContainer">
-            <textarea class="form-control" id="description" name="description" rows="5" required></textarea>
-        </div>
-
-        <div class="addEditMenuItemPriceContainer">
-            <label for="price" class="form-label">Price:</label>
-            <input type="number" class="form-control" id="price" name="price" step="0.01" min="0" required>
-        </div>
-
-        <div class="addEditMenuItemCatContainer">
-            <label for="category" class="form-label">Category:</label>
-            <select class="form-select" id="category" name="category" required>
-                <option value="">Select category</option>
-                <option value="Pastries & Croissants">Pastries & Croissants</option>
-                <option value="Cookies, Squares & Tarts">Cookies, Squares & Tarts</option>
-                <option value="Muffins, Scones & Tea Biscuits">Muffins, Scones & Tea Biscuits</option>
-                <option value="Cakes & Loafs">Cakes & Loafs</option>
-                <option value="Beverages">Beverages</option>
-            </select>
-        </div>
-
-        <div class="addEditMenuItemImgContainer">
-            <label for="image" class="form-label">Image URL:</label>
-            <input type="text" class="form-control" id="image" name="image">
-        </div>
-
-        <div class="addEditMenuItemBtnContainer">
-            <input type="submit" class="btn btn-primary" value="Add Menu Item" name="submit">
-        </div>
-    </form>
+    <div>
+      <label for="order_status" class="form-label">Order Status:</label>
+      <input type="text" class="form-control" id="order_status" name="order_status" required>
+    </div>
+      <label for="is_delivery" class="form-label">Requires Delivery?</label>
+      <input type="checkbox" class="form-check-input" id="is_delivery" name="is_delivery">
+    <div>
+      <label for="delivery_address" class="form-label mt-2">Delivery Address (if applicable):</label>
+      <input type="text" class="form-control" id="delivery_address" name="delivery_address">
+    </div>
+    <div>
+      <label for="special_instructions" class="form-label">Special Instructions:</label>
+      <textarea class="form-control" id="special_instructions" name="special_instructions" rows="5"></textarea>
+    </div>
+    <div>
+      <input type="submit" class="btn btn-primary" value="Add Catering Order" name="submit">
+    </div>
+  </form>
 </div>
+
 <?php require_once('components/footer.php'); ?>
