@@ -1,17 +1,28 @@
+/* FONT IMPORTS */
+
+@font-face
+{
+    font-family: headingFont;
+    src: url(../font/cmunui.ttf);
+}
+
 /* BASICS */
 
 h1
 {
+    font-family: headingFont;
     font-size: 48px;
 }
 
 h2
 {
+    font-family: headingFont;
     font-size: 36px;
 }
 
 h3
 {
+    font-family: headingFont;
     font-size: 20pt;
 }
 
@@ -97,6 +108,54 @@ p, a, ol, li, label, input, button, select
     background-color: #fff6d7;
     padding: 10px;
     margin: 5px;
+}
+
+.frontItemDetails
+{
+    background-color: #fff6d7;
+    padding: 10px;
+    margin: 5px;
+}
+
+.frontItemDetailsName
+{
+    display: flex;
+    justify-content: center;
+}
+
+.frontItemDetailsImg
+{
+    grid-area: frontItemImg;
+    padding: 5px;
+    width: 100%;
+}
+
+.frontItemDetailsCat
+{
+    grid-area: frontItemCat;
+    padding: 5px;
+}
+
+.frontItemDetailsDesc
+{
+    grid-area: frontItemDesc;
+    padding: 5px;
+}
+
+.frontItemDetailsPrice
+{
+    grid-area: frontItemPrice;
+    padding: 5px;
+}
+
+.frontItemContainer
+{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas:
+        "frontItemImg frontItemCat"
+        "frontItemImg frontItemDesc"
+        "frontItemImg frontItemPrice";
 }
 
 /* BACK END */

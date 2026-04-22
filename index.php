@@ -20,18 +20,18 @@
     $pastryResult = $pastryStmt->fetch_all(MYSQLI_ASSOC);
 ?>
 
-<h1 id="mainTitle">Three Dudes Bakery</h1>
+<h1 id="mainTitle">THREE DUDES BAKERY</h1>
 
 <section id="hero">
     <img src="assets/img/hero_bakery.jpg" alt="a front desk of a bakery">
     <div id="hero-text">
-        <h2>Our Grand Opening!</h2>
+        <h2>OUR GRAND OPENING!</h2>
         <p>Let's see what three guys can bake together!</p>
     </div>
 </section>
 <br>
 <div id="latestItems">
-    <h2>Latest Items</h2>
+    <h2>LATEST ITEMS</h2>
     <div class="frontItemGrid">
         <?php foreach($latestResult AS $item) : ?>
             <div class="frontMenuItem card border-0 shadow-sm rounded-3">
@@ -39,14 +39,14 @@
                 <p class="frontItemCat"><?php echo $item['category'] ?></p>
                 <img class="frontItemImage" src="<?php echo $item['image_href']?>" alt="" width="250px">
                 <p class="frontItemPrice">$<?php echo $item['price'] ?></p>
-                <a href="#"><button class="btn btn-outline-primary">View Item</button></a>
+                <a href="menu-item.php?id=<?= $item['id'] ?>"><button class="btn btn-outline-primary">View Item</button></a>
             </div>
         <?php endforeach ?>
     </div>
 </div>
 <br>
 <div id="pastries">
-    <h2>Pastries & Croissants</h2>
+    <h2>PASTRIES & CROISSANTS</h2>
     <div class="frontItemGrid">
         <?php foreach($pastryResult AS $item) : ?>
             <div class="frontMenuItem card border-0 shadow-sm rounded-3">
@@ -54,14 +54,14 @@
                 <p class="frontItemCat"><?php echo $item['category'] ?></p>
                 <img class="frontItemImage" src="<?php echo $item['image_href']?>" alt="" width="250px">
                 <p class="frontItemPrice">$<?php echo $item['price'] ?></p>
-                <a href="#"><button class="btn btn-outline-primary">View Item</button></a>
+                <a href="menu-item.php?id=<?= $item['id'] ?>"><button class="btn btn-outline-primary">View Item</button></a>
             </div>
         <?php endforeach ?>
     </div>
 </div>
 <br>
 <div id="catering">
-    <h2>Catering</h2>
+    <h2>CATERING</h2>
     <!-- CATERING WILL GO HERE -->
 </div>
 
