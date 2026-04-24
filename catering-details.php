@@ -76,6 +76,7 @@ $cateringItems = $result->fetch_all(MYSQLI_ASSOC);
         <th>Menu Item Name</th>
         <th>Price @ Booking</th>
         <th>Quantity</th>
+        <!-- <th>Actions</th> -->
       </tr>
     </thead>
     <tbody>
@@ -90,7 +91,7 @@ $cateringItems = $result->fetch_all(MYSQLI_ASSOC);
   </table>
 <?php endif; ?>
 
-  <a href="add-catering-items.php?id=<?= $_GET['id'] ?>" class="btn btn-success">Add Catering Items</a>
+<a href="add-catering-items.php?id=<?= $_GET['id'] ?>" class="btn btn-success">Add Catering Items</a>
 
 
 <h2>Order Details</h2>

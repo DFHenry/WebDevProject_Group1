@@ -29,16 +29,16 @@ if($stmt->execute() == false)
         echo "Execute failed: " . $stmt->error;
     }
 $result = $stmt->get_result();
-$items = $result->fetch_all(MYSQLI_ASSOC);
+$orders = $result->fetch_all(MYSQLI_ASSOC);
 
-if(empty($items)) {
+if(empty($orders)) {
     header("Location: dashboard.php"); // Redirect to dashboard if the catering order is not found
     exit();
 }
 
 // end of catering order authentication and retrieval logic
 
-$item = $items[0]; // Extract the single catering order from the array
+$order = $orders[0]; // Extract the single catering order from the array
 
 if(isset($_POST['submit']))
 {
@@ -67,7 +67,7 @@ if(isset($_POST['submit']))
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="dashboard.php">Dashboard</a></li>
-        <li class="breadcrumb-item"><a href="catering-details.php?id=<?= $item['id'] ?>"></a></li>
+        <li class="breadcrumb-item"><a href="catering-details.php?id=<?= $order['id'] ?>"></a></li>
     <li class="breadcrumb-item active" aria-current="page">Delete</li>
   </ol>
 </nav>
@@ -75,13 +75,13 @@ if(isset($_POST['submit']))
 <div class="mb-3">
   <p>Use the form below to delete your catering order. This action cannot be undone.</p>
 </div>
-<form action="delete-catering.php?id=<?= $item['id'] ?>" method="post">
+<form action="delete-catering.php?id=<?= $order['id'] ?>" method="post">
 
   <div class="alert alert-danger" role="alert"> 
-    Are you sure you want to delete the catering order by id: "<?= htmlspecialchars($item['id']) ?>"? This action cannot be undone.
+    Are you sure you want to delete the catering order by id: "<?= htmlspecialchars($order['id']) ?>"? This action cannot be undone.
   </div>
 
-  <a href="catering-details.php?id=<?= $item['id'] ?>" class="btn btn-secondary">Cancel</a>
+  <a href="catering-details.php?id=<?= $order['id'] ?>" class="btn btn-secondary">Cancel</a>
   <input type="submit" class="btn btn-danger" value="Delete" name="submit">
 </form>
 
