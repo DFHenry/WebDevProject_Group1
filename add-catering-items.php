@@ -76,7 +76,6 @@ if(isset($_POST['submit']))
 
 <h1 class="mb-3">Add Items to Catering Order</h1>
 
-  <?= var_dump($_POST); ?>
 
 <a href="dashboard.php" class="btn btn-secondary mb-3">Back to Dashboard</a> <!-- Button to navigate back to the dashboard -->  
 <div class="mb-3">
