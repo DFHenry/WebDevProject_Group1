@@ -86,3 +86,5 @@
 
 
 <?php require_once('components/footer.php'); ?>
+
+<a href="login.php">Admin Login</a>
