@@ -70,7 +70,7 @@
     <?php endforeach ?>
 </div>
 
-<h3>Catering Orders</h3>
+<h3>Manage Catering Orders</h3>
 
 <a href="/add-catering.php"><button class="btn btn-success">Add New Catering Order</button></a>
 
@@ -86,7 +86,7 @@
           <h3 class="mb-1"><?= $eventType ?></h3>
           <p class="menuItemCat">Event ID: <?=$order['id'] ?></p>
           <p class="menuItemCat">Guests: <?=$order['guest_count'] ?></p>
-          <p class="menuItemPrice mb-2">Event Date: <?= date_format(new DateTime($order['event_date']), 'Y-m-d H:i') ?></p>
+          <p class="menuItemPrice mb-2">Event Date: <?= date_format(new DateTime($order['event_date']), 'F j, Y, g:i A') ?></p>
           <?php if($order['is_delivery']) : ?>
             <p class="menuItemPrice mb-2">Requires Delivery</p>
             <p class="menuItemPrice mb-2">To: <?= $order['delivery_address']?></p>
