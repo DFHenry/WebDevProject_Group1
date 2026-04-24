@@ -19,11 +19,11 @@ if(!isset($_GET['id']) || !is_numeric($_GET['id']))
 
 <?php
 // get catering orders for the logged-in user from database
-$query = 'SELECT id, user_id FROM catering_orders WHERE user_id = ? AND id = ? LIMIT 1';
+$query = 'SELECT order_id FROM catering_orders WHERE order_id = ? LIMIT 1';
 $stmt = $db->prepare($query); 
 $userId = intval($_SESSION['id']);
 $orderId = intval($_GET['id']);
-$stmt->bind_param('ii', $userId, $orderId);
+$stmt->bind_param('i', $orderId);
 if($stmt->execute() == false)
     {
         echo "Execute failed: " . $stmt->error;
@@ -42,11 +42,10 @@ $order = $orders[0]; // Extract the single catering order from the array
 
 if(isset($_POST['submit']))
 {
-    $query = "DELETE FROM catering_orders WHERE id = ? AND user_id = ?";
+    $query = "DELETE FROM catering_orders WHERE order_id = ?";
     $stmt = $db->prepare($query);
-    $stmt->bind_param('ii',
-        $orderId,
-        $userId
+    $stmt->bind_param('i',
+        $orderId
     );
     if($stmt->execute() == false)
         {
@@ -67,7 +66,7 @@ if(isset($_POST['submit']))
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="dashboard.php">Dashboard</a></li>
-        <li class="breadcrumb-item"><a href="catering-details.php?id=<?= $order['id'] ?>"></a></li>
+        <li class="breadcrumb-item"><a href="catering-details.php?id=<?= $order['order_id'] ?>">Order #<?= $order['order_id'] ?></a></li>
     <li class="breadcrumb-item active" aria-current="page">Delete</li>
   </ol>
 </nav>
@@ -75,13 +74,13 @@ if(isset($_POST['submit']))
 <div class="mb-3">
   <p>Use the form below to delete your catering order. This action cannot be undone.</p>
 </div>
-<form action="delete-catering.php?id=<?= $order['id'] ?>" method="post">
+<form action="delete-catering.php?id=<?= $order['order_id'] ?>" method="post">
 
   <div class="alert alert-danger" role="alert"> 
-    Are you sure you want to delete the catering order by id: "<?= htmlspecialchars($order['id']) ?>"? This action cannot be undone.
+    Are you sure you want to delete the catering order by id: "<?= htmlspecialchars($order['order_id']) ?>"? This action cannot be undone.
   </div>
 
-  <a href="catering-details.php?id=<?= $order['id'] ?>" class="btn btn-secondary">Cancel</a>
+  <a href="catering-details.php?id=<?= $order['order_id'] ?>" class="btn btn-secondary">Cancel</a>
   <input type="submit" class="btn btn-danger" value="Delete" name="submit">
 </form>
 

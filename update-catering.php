@@ -19,15 +19,15 @@ if(!isset($_GET['id']) || !is_numeric($_GET['id']))
 
 <?php
 // get catering orders for the logged-in user from database
-$query = 'SELECT id, event_date, 
+$query = 'SELECT order_id, event_date, 
           guest_count, event_type, 
           is_delivery, delivery_address, 
           special_instructions, order_status 
-          FROM catering_orders WHERE user_id = ? AND id = ? LIMIT 1';
+          FROM catering_orders WHERE order_id = ? LIMIT 1';
 $stmt = $db->prepare($query); 
 $userId = intval($_SESSION['id']);
 $orderId = intval($_GET['id']);
-$stmt->bind_param('ii', $userId, $orderId);
+$stmt->bind_param('i', $orderId);
 if($stmt->execute() == false)
     {
         echo "Execute failed: " . $stmt->error;
@@ -44,40 +44,35 @@ if(empty($items)) {
 
 $item = $items[0]; // Extract the single menu item from the array
 
+//var_dump($item);
+
 if(isset($_POST['submit']))
 {
+
   $isValid = true;
   if(empty($_POST['event_date']) || empty($_POST['guest_count']) || empty($_POST['event_type']) || empty($_POST['order_status']))
   {
     $isValid = false;
   }
-  elseif(($_POST['is_delivery']))
-  {
-    if(empty($_POST['delivery_address']))
-    {
-      $isValid = false;
-    }
-  }
+
 
   if($isValid)
   {
-    $userId = intval($_SESSION['id']);
     $orderId = intval($_GET['id']);
     $eventDate = trim($_POST['event_date']);
     $guestCount = intval($_POST['guest_count']);
     $eventType = trim($_POST['event_type']);
-    $isDelivery = isset($_POST['is_delivery']) ? 1 : 0;
-    $deliveryAddress = $isDelivery ? trim($_POST['delivery_address']) : null;
+    $isDelivery = intval($_POST['is_delivery']) ? 1 : 0;
+    $deliveryAddress = trim($_POST['delivery_address']);
     $specialInstructions = trim($_POST['special_instructions']);
     $orderStatus = trim($_POST['order_status']);
     $query = "UPDATE catering_orders 
-            SET user_id = ?, event_date = ?, 
+            SET event_date = ?, 
             guest_count = ?, event_type = ?, is_delivery = ?, 
             delivery_address = ?, special_instructions = ?, 
-            order_status = ? WHERE user_id = ? AND id = ?";
+            order_status = ? WHERE order_id = ?";
     $stmt = $db->prepare($query);
-    $stmt->bind_param('isisisssii',
-      $userId,
+    $stmt->bind_param('sisisssi',
       $eventDate,
       $guestCount,
       $eventType,
@@ -85,7 +80,6 @@ if(isset($_POST['submit']))
       $deliveryAddress,
       $specialInstructions,
       $orderStatus,
-      $userId,
       $orderId
     );
   if($stmt->execute() == false)
@@ -108,7 +102,7 @@ if(isset($_POST['submit']))
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="dashboard.php">Dashboard</a></li>
-        <li class="breadcrumb-item"><a href="catering-details.php?id=<?= $item['id'] ?>"><?= htmlspecialchars($item['id']) ?></a></li>
+        <li class="breadcrumb-item"><a href="catering-details.php?id=<?= $item['order_id'] ?>">Order #<?= htmlspecialchars($item['order_id']) ?></a></li>
     <li class="breadcrumb-item active" aria-current="page">Update</li>
   </ol>
 </nav>
@@ -124,7 +118,7 @@ if(isset($_POST['submit']))
 </div>
 
 <div class="addEditMenuItemBox">
-  <form class="card border-0 shadow-sm rounded-3" action="update-catering.php?id=<?= $item['id'] ?>" method="post">
+  <form class="card border-0 shadow-sm rounded-3" action="update-catering.php?id=<?= $item['order_id'] ?>" method="post">
     <div>
       <label for="event_date" class="form-label">Event Date:</label>
       <input type="datetime-local" class="form-control" id="event_date" name="event_date" required value="<?= htmlspecialchars(date('Y-m-d\TH:i', strtotime($item['event_date']))) ?>">
@@ -142,11 +136,12 @@ if(isset($_POST['submit']))
       <label for="order_status" class="form-label">Order Status:</label>
       <input type="text" class="form-control" id="order_status" name="order_status" required value="<?= htmlspecialchars($item['order_status']) ?>">
     </div>
+      <input type="hidden" name="is_delivery" value="0">
       <label for="is_delivery" class="form-label">Requires Delivery?</label>
-      <input type="checkbox" class="form-check-input" id="is_delivery" name="is_delivery" <?= $item['is_delivery'] ? 'checked' : '' ?>>
+      <input type="checkbox" class="form-check-input" id="is_delivery" name="is_delivery" value="1">
     <div>
       <label for="delivery_address" class="form-label mt-2">Delivery Address (if applicable):</label>
-      <input type="text" class="form-control" id="delivery_address" name="delivery_address" value="<?= $item['is_delivery'] ? htmlspecialchars($item['delivery_address']) : '' ?>">
+      <input type="text" class="form-control" id="delivery_address" name="delivery_address" value="<?= $item['delivery_address'] ?>">
     </div>
     <div>
       <label for="special_instructions" class="form-label">Special Instructions:</label>

@@ -19,13 +19,7 @@
     $pastryStmt = $db->query($pastryQuery);
     $pastryResult = $pastryStmt->fetch_all(MYSQLI_ASSOC);
 
-    //get recent catering orders, 
-    // joining item_id names from menu_items table
-    // and displaying quantities from catering_order_items table
-    $cateringQuery = 'SELECT * FROM catering_orders 
-                  INNER JOIN catering_order_items ON catering_orders.id = catering_order_items.order_id 
-                  INNER JOIN menu_items ON catering_order_items.item_id = menu_items.id 
-                  LIMIT 3';
+    $cateringQuery = 'SELECT name, id, category, image_href, description, price FROM menu_items WHERE category = "Catering" LIMIT 3';
     $cateringStmt = $db->query($cateringQuery);
     $cateringResult = $cateringStmt->fetch_all(MYSQLI_ASSOC);
 ?>
@@ -49,7 +43,13 @@
                 <p class="frontItemCat"><?php echo $item['category'] ?></p>
                 <img class="frontItemImage" src="<?php echo $item['image_href']?>" alt="" width="250px">
                 <p class="frontItemPrice">$<?php echo $item['price'] ?></p>
-                <a href="menu-item.php?id=<?= $item['id'] ?>"><button class="btn btn-outline-primary">View Item</button></a>
+                <?php if($item['category'] == 'Catering'): ?>
+                    <a href="catering-item.php?id=<?= $item['id'] ?>"><button class="btn btn-outline-primary">Place Order</button></a>
+                <?php endif; ?>
+                <?php if($item['category'] != 'Catering'): ?>
+                    <a href="menu-item.php?id=<?= $item['id'] ?>"><button class="btn btn-outline-primary">View Item</button></a>
+                <?php endif ?>
+
             </div>
         <?php endforeach ?>
     </div>
@@ -71,15 +71,15 @@
 </div>
 <br>
 <div id="catering">
-    <h2>CATERING SUCCESSES</h2>
+    <h2>CATERING OPTIONS</h2>
     <div class="frontItemGrid">
-        <?php foreach($cateringResult AS $order) : ?>
-            <div class="frontMenuOrder card border-0 shadow-sm rounded-3">
-                <h3 class="frontItemName">Event Type: <?= $order['event_type'] ?></h3>
-                <p class="frontItemPrice">Guests: <?= $order['guest_count'] ?></p>
-                <!-- Show the menu item names and quantities -->
-                <p class="frontItemCat">Menu Item: <?= $order['name'] ?></p>
-                <p class="frontItemCat">Quantity: <?= $order['quantity'] ?></p>
+        <?php foreach($cateringResult AS $catering) : ?>
+            <div class="frontMenuItem card border-0 shadow-sm rounded-3">
+                <h3 class="frontItemName">Event Type: <?= $catering['name'] ?></h3>
+                <p class="frontItemCat"><?php echo $catering['category'] ?></p>
+                <img class="frontMenuItem" src="<?php echo $catering['image_href'] ?>" alt="" width="250px">
+                <p class="frontItemPrice">$<?php echo $item['price'] ?></p>
+                <a href="catering-item.php?id=<?= $catering['id'] ?>"><button class="btn btn-outline-primary">Place Order</button></a>
             </div>
         <?php endforeach ?>
 </div>

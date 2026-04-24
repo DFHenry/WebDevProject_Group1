@@ -192,15 +192,41 @@ p, a, ol, li, label, input, button, select
     grid-area: viewButton;
 }
 
+.menuItemID
+{
+    grid-area: "itemID";
+}
+
+.menuItemGuests
+{
+    grid-area: "itemGuests";
+}
+
+.menuItemDate
+{
+    grid-area: "itemDate";
+}
+
+.menuItemDelivery
+{
+    grid-area: "itemDelivery";
+}
+
+.menuItemStatus
+{
+    grid-area: "itemStatus";
+}
+
 .menuItem
 {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-areas: 
-        "itemName itemName"
-        "itemCategory itemImage"
-        "itemPrice itemImage"
-        ". viewButton";
+
+    background-color: #fff6d7;
+    padding: 10px;
+    margin: 5px;
+}
+
+.cateringItem
+{
     background-color: #fff6d7;
     padding: 10px;
     margin: 5px;

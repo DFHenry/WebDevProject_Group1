@@ -19,13 +19,12 @@ if(!isset($_GET['id']) || !is_numeric($_GET['id']))
 
 <?php
 // get catering orders from database catering_orders table
-$query = 'SELECT id, event_date, guest_count, event_type, 
-        is_delivery, delivery_address, special_instructions, order_status 
-        FROM catering_orders WHERE user_id = ? AND id = ? LIMIT 1';
+$query = 'SELECT * 
+        FROM catering_orders 
+        WHERE order_id = ? LIMIT 1';
 $stmt = $db->prepare($query); 
-$userId = intval($_SESSION['id']);
 $orderId = intval($_GET['id']);
-$stmt->bind_param('ii', $userId, $orderId);
+$stmt->bind_param('i',$orderId);
 if($stmt->execute() == false)
   {
     echo "Execute failed: " . $stmt->error;
@@ -34,36 +33,22 @@ $result = $stmt->get_result();
 $orders = $result->fetch_all(MYSQLI_ASSOC);
 
 if(empty($orders)) {
-    header("Location: dashboard.php"); // Redirect to dashboard if the catering order is not found
+    //header("Location: dashboard.php"); // Redirect to dashboard if the catering order is not found
     exit();
 }
 
 $order = $orders[0]; // Extract the single catering order from the array
-
-
-// get catering items for the order from database catering_order_items table
-$query = 'SELECT * FROM catering_order_items 
-          INNER JOIN menu_items ON catering_order_items.item_id = menu_items.id
-          WHERE order_id = ?';
-$stmt = $db->prepare($query);
-$stmt->bind_param('i', $orderId);
-if($stmt->execute() == false)
-  {
-    echo "Execute failed: " . $stmt->error;
-  }
-$result = $stmt->get_result();
-$cateringItems = $result->fetch_all(MYSQLI_ASSOC);
 
 ?>
 
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="dashboard.php">Dashboard</a></li>
-    <li class="breadcrumb-item active" aria-current="page"><?= $order['id'] ?></li>
+    <li class="breadcrumb-item active" aria-current="page">Order #<?= $order['order_id'] ?></li>
   </ol>
 </nav>
 
-<h1 class="mb-3">Order #<?= $order['id'] ?></h1>
+<h1 class="mb-3">Order #<?= $order['order_id'] ?></h1>
 
 <h2>Catering Items</h2>
 
@@ -129,8 +114,8 @@ $cateringItems = $result->fetch_all(MYSQLI_ASSOC);
 </table>
 
 <div class="d-flex gap-2 mb-3 flex-wrap">
-  <a href="update-catering.php?id=<?= $order['id'] ?>" class="btn btn-secondary">Edit Catering Order</a>
-  <a href ="delete-catering.php?id=<?= $order['id'] ?>" class="btn btn-danger">Delete Catering Order</a>
+  <a href="update-catering.php?id=<?= $order['order_id'] ?>" class="btn btn-secondary">Edit Catering Order</a>
+  <a href ="delete-catering.php?id=<?= $order['order_id'] ?>" class="btn btn-danger">Delete Catering Order</a>
 </div>
 
 

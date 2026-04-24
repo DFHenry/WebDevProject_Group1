@@ -28,7 +28,7 @@
     $menuResult = $menuStmt->fetch_all(MYSQLI_ASSOC);
 
     //get all catering orders
-    $cateringQuery = 'SELECT id, event_date, guest_count, event_type, is_delivery, delivery_address, special_instructions, order_status FROM catering_orders ORDER BY event_date';
+    $cateringQuery = 'SELECT order_id, event_date, guest_count, event_type, is_delivery, delivery_address, special_instructions, order_status FROM catering_orders';
 
     //prepare sql statement
     $cateringStmt = $db->query($cateringQuery);
@@ -76,26 +76,19 @@
 
 
 <div class="itemGrid mt-3" id="cateringOrders">
-  <?php $eventType = ''; ?>
-    <!-- TODO: create an itemGrid for catering items -->
-     <?php foreach($cateringResult AS $order) : ?>
-      <?php if ($eventType !== $order['event_type']) : ?>
+    <?php $eventType = ''; ?>
+    <?php foreach($cateringResult AS $order) : ?>
+    <?php if ($eventType !== $order['event_type']) : ?>
         <?php $eventType = $order['event_type']; ?>
         <?php endif; ?>
-        <div class="card border-0 shadow-sm rounded-3" style="grid: 1fr 1fr / 1fr 1fr">
-          <h3 class="mb-1"><?= $eventType ?></h3>
-          <p class="menuItemCat">Event ID: <?=$order['id'] ?></p>
-          <p class="menuItemCat">Guests: <?=$order['guest_count'] ?></p>
-          <p class="menuItemPrice mb-2">Event Date: <?= date_format(new DateTime($order['event_date']), 'F j, Y, g:i A') ?></p>
-          <?php if($order['is_delivery']) : ?>
-            <p class="menuItemPrice mb-2">Requires Delivery</p>
-            <p class="menuItemPrice mb-2">To: <?= $order['delivery_address']?></p>
-        <?php else : ?>
-          <p class="menuItemPrice mb-2">For Pickup</p>
-        <?php endif; ?>
-          <p class="menuItemCat text-muted"><?= $order['order_status'] ?></p>
-          <a href="catering-details.php?id=<?= $order['id'] ?>"><button class="btn btn-outline-primary">View Order</button></a>
-      </div>
+        <div class="card border-0 shadow-sm rounded-30 cateringItem">
+          <h3><?= $eventType ?></h3>
+          <p>Event ID: <?=$order['order_id'] ?></p>
+          <p>Guests: <?=$order['guest_count'] ?></p>
+          <p>Event Date: <?= date_format(new DateTime($order['event_date']), 'F j, Y, g:i A') ?></p>
+          <p><?= $order['order_status'] ?></p>
+          <a href="catering-details.php?id=<?= intval($order['order_id']) ?>"><button class="btn btn-outline-primary">View Order</button></a>
+        </div>
     <?php endforeach ?>
 </div>
 

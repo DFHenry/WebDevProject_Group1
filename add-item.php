@@ -103,6 +103,7 @@ if(isset($_POST['submit']))
                 <option value="Muffins, Scones & Tea Biscuits">Muffins, Scones & Tea Biscuits</option>
                 <option value="Cakes & Loafs">Cakes & Loafs</option>
                 <option value="Beverages">Beverages</option>
+                <option value="Catering">Catering</option>
             </select>
         </div>
 
